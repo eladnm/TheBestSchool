@@ -1,0 +1,64 @@
+html {
+  overflow-y: scroll;
+}
+form {
+  display:block;
+  background: rgba(19, 35, 47, 0.9); 
+    padding-top: 30px;
+    padding-right:30px;
+    padding-bottom: 30px;
+    padding-left:30px;
+  max-width: 50%;
+  width: 50%;
+margin-left: auto;
+margin-right: auto;
+margin-top: 10%;
+margin-bottom: auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
+
+body { 
+  font-family: 'Titillium Web', sans-serif;
+  background-image: url(images/school3.png);
+
+}
+
+input{
+  font-size: 22px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 5px 5px;
+  border: 1px solid #a0b3b0;
+  color: black;
+  border-radius: 0;
+  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+input #submit {
+  width: 60%;
+}
+
+label {
+  position: absolute;
+  -webkit-transform: translateY(6px);
+          transform: translateY(6px);
+  color: rgba(255, 255, 255, 0.5);
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+  font-size: 22px;
+}
+span {
+    color: #1ab188;
+    font-weight: bold;
+}
+.field-wrap {
+  position: relative;
+}
+h1{
+  text-align: center;
+}
