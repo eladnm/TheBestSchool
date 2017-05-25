@@ -76,20 +76,30 @@ $(document).ready(function(){
     $("#edit").load('views/students-container.php', function () {
       $('#formm').submit(function(e) {
         e.preventDefault();     
-        var name = $("#name").val();
-        var id = $("#id").val();
-       var phone = $("#phone").val();
-       var email = $("#email").val();
-       var image = $("#image").val();
-       var dataString = 'name='+ name + '&phone='+ phone +'&email='+ email + '&image='+ image
+        //var dataString = $('#formm').serializeArray();
+        var formData = new FormData();
+        formData.append('name', $("#name").val());
+        formData.append('phone', $("#phone").val());
+        formData.append('email', $("#email").val());
+        formData.append('id', $("#id").val());
+        formData.append('submit', 'submit');
+        formData.append('imageUpload', $('#imageUpload').get(0).files[0])
+        //var name = $("#name").val();
+        //var id = $("#id").val();
+       //var phone = $("#phone").val();
+       //var email = $("#email").val();
+       //var image = $("#image").val();
+       // var dataString = 'name='+ name + '&phone='+ phone +'&email='+ email + '&image='+ image
 
         $.ajax({
                 type: "post",
                 url: "http://localhost/school_project/add-student.php",
-                data: dataString,
+                processData: false,
+                contentType: false,
+                data: formData,
                 success: function(result){
-                alert (result);
-              }
+                  console.log(result);
+                }
           });
         }); 
     });

@@ -30,7 +30,7 @@ echo "<div style='padding:4px; border:1px solid red; color:red'>" . $error
 . "</div>";
 } ?>
 
-  <form id="formm" action="" method="post">
+  <form id="formm" action="" enctype="multipart/form-data" method="post">
 <div>
 <?php if ($id != '') { ?>
 <input type="hidden" name="id"value="<?php echo $id; ?>" />
@@ -40,7 +40,8 @@ echo "<div style='padding:4px; border:1px solid red; color:red'>" . $error
 value="<?php echo $name; ?>"/><br/>
 <strong>Phone: *</strong> <input type="text" required name="phone" id="phone"value="<?php echo $phone; ?>"/><br/>
 <strong>Email: *</strong> <input type="email" required name="email" id="email"value="<?php echo $email; ?>"/>
-<strong>Image: *</strong> <input type="file" src=images accept="image/* id="image"value="<?php echo $image; ?>"/>
+ <input type="file" src="/school_project/images" id="imageUpload" name="imageUpload"/>
+
 <p>* required</p>
 <input id="fire" type="submit" name="submit" value="submit" />
 </div>
@@ -59,40 +60,41 @@ EDIT RECORD
 */
 
 // if the 'id' variable is set in the URL, we know that we need to edit a record
-if (isset($_GET['id']))
-{
+if (isset($_GET['id'])) {
 // if the form's submit button is clicked, we need to process the form
-if (isset($_POST['submit']))
-{
+if (isset($_POST['submit'])) {
 // make sure the 'id' in the URL is valid
-if (is_numeric($_POST['id']))
-{
+if (is_numeric($_POST['id'])) {
 // get variables from the URL/form
 $id = $_POST['id'];
 $name = htmlentities($_POST['name'], ENT_QUOTES);
 $phone = htmlentities($_POST['phone'], ENT_QUOTES);
 $email = htmlentities($_POST['email'], ENT_QUOTES);
-$image = htmlentities($_POST['image'], ENT_QUOTES);
+$image = htmlentities($_FILES['image'], ENT_QUOTES);
+if(isset($_POST["submit"])) {
+
+    $target_dir = "images/";
+    $file = $_FILES['imageUpload']['name'];
+    $target_file = $target_dir . $file;
+    $uploadOk = 1;
+    $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+}
 // check that name and phone and email are not empty
-if ($name == '' || $phone == '' || $email == '' || $image == '')
-{
+if ($name == '' || $phone == '' || $email == '' ) {
 // if they are empty, show an error message and display the form
 $error = 'ERROR: Please fill in all required fields!';
 renderForm($name, $phone, $email, $image, $error, $id);
 }
-else
-{
+else {
 // if everything is fine, update the record in the database
 if ($stmt = $connection->prepare("UPDATE students SET name = ?, phone = ?, email = ?, image = ?
-WHERE id=?"))
-{
+WHERE id=?")) {
 $stmt->bind_param("ssssi", $name, $phone, $email, $image, $id);
 $stmt->execute();
 $stmt->close();
 }
 // show an error message if the query has an error
-else
-{
+else {
 echo "ERROR: could not prepare SQL statement.";
 }
 
@@ -101,23 +103,19 @@ header("Location: ../index.php");
 }
 }
 // if the 'id' variable is not valid, show an error message
-else
-{
+else {
 echo "Error!";
 }
 }
 // if the form hasn't been submitted yet, get the info from the database and show the form
-else
-{
+else {
 // make sure the 'id' value is valid
-if (is_numeric($_GET['id']) && $_GET['id'] > 0)
-{
+if (is_numeric($_GET['id']) && $_GET['id'] > 0) {
 // get 'id' from URL
 $id = $_GET['id'];
 
 // get the recod from the database
-if($stmt = $connection->prepare("SELECT name, phone, email, image FROM students WHERE id=?"))
-{
+if($stmt = $connection->prepare("SELECT name, phone, email, image FROM students WHERE id=?")) {
 $stmt->bind_param("i", $id);
 $stmt->execute();
 
@@ -130,19 +128,16 @@ renderForm($name, $phone, $email, $image, NULL, $id);
 $stmt->close();
 }
 // show an error if the query has an error
-else
-{
+else {
 echo "Error: could not prepare SQL statement";
-}
+ }
 }
 // if the 'id' value is not valid, redirect the user back to the view.php page
-else
-{
+else {
 header("Location: ../index.php");
 }
 }
 }
-
 
 
 /*
@@ -151,35 +146,31 @@ New Student
 
 */
 // if the 'id' variable is not set in the URL, we must be creating a new record
-else
-{
+
+else {
 // if the form's submit button is clicked, we need to process the form
-if (isset($_POST['submit']))
-{
+if (isset($_POST['submit'])) {
+
 // get the form data
 $name = htmlentities($_POST['name'], ENT_QUOTES);
 $phone = htmlentities($_POST['phone'], ENT_QUOTES);
 $email = htmlentities($_POST['email'], ENT_QUOTES);
-$image = htmlentities($_POST['image'], ENT_QUOTES);
-// check that variables not empty
-if ($name == '' || $phone == '' || $email == '' || $image == '')
-{
+
+
+if ($name == '' || $phone == '' || $email == '') {
 // if they are empty, show an error message and display the form
 $error = 'ERROR: Please fill in all required fields!';
 renderForm($name, $phone, $email, $image, $error);
 }
-else
-{
-// insert the new record into the database
-if ($stmt = $connection->prepare("INSERT students (name, phone, email, image) VALUES (?, ?, ?, ?)"))
-{
+else {
+  
+if ($stmt = $connection->prepare("INSERT students (name, phone, email, image) VALUES (?, ?, ?, ?)")) {
 $stmt->bind_param("ssss", $name, $phone, $email, $image);
 $stmt->execute();
 $stmt->close();
 }
 // show an error if the query has an error
-else
-{
+else {
 echo "ERROR: Could not prepare SQL statement.";
 }
 
@@ -190,8 +181,7 @@ echo "Student added successfully";
 
 }
 // if the form hasn't been submitted yet, show the form
-else
-{
+else {
 renderForm();
 }
 }
