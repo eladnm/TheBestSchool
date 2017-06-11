@@ -10,9 +10,9 @@ session_start();
 $_SESSION['id'] = '$id';
 $_SESSION['name'] = '$name';
 $_SESSION['descr'] = '$descr';
-$_SESSION['image'] = '$simage';
+$_SESSION['image'] = '$image';
 $_SESSION['error'] = '$error';
-function renderForm($name = '', $descr ='', $simage ='', $error = '', $id = '')
+function renderForm($name = '', $descr ='', $image ='', $error = '', $id = '')
 { ?>
 <!DOCTYPE>
 <html>
@@ -28,18 +28,18 @@ function renderForm($name = '', $descr ='', $simage ='', $error = '', $id = '')
 echo "<div style='padding:4px; border:1px solid red; color:red'>" . $error
 . "</div>";
 } ?>
-  <form id="form_course" action="add-docurse.php" method="post">
+  <form id="formm" action="" enctype="multipart/form-data" method="post">
 <div>
 <?php if ($id != '') { ?>
-<input type="hidden" name="id" value="<?php echo $id; ?>" />
+<input type="hidden" name="id"value="<?php echo $id; ?>" />
 <p>ID: <?php echo $id; ?></p>
 <?php } ?>
 <strong>Name: *</strong> <input type="text" required name="name" id="name"
 value="<?php echo $name; ?>"/><br/>
 <strong>Description: *</strong> <input type="text" required name="descr" id="descr"value="<?php echo $descr; ?>"/><br/>
-<strong>Image: *</strong> <input type="text" required name="image" id="image"value="<?php echo $simage; ?>"/>
+ <input type="file" src="/school_project/images" id="imageUpload" name="imageUpload"/>
 <p>* required</p>
-<input type="submit" name="submit" value="submit" />
+<input id="fire" type="submit" name="submit" value="submit" />
 </div>
 </form>
 </body>
@@ -63,15 +63,13 @@ if (is_numeric($_POST['id']))
 // get variables from the URL/form
 $id = $_POST['id'];
 $name = htmlentities($_POST['name'], ENT_QUOTES);
-$phone = htmlentities($_POST['phone'], ENT_QUOTES);
-$email = htmlentities($_POST['email'], ENT_QUOTES);
-$image = htmlentities($_POST['simage'], ENT_QUOTES);
+$descr = htmlentities($_POST['descr'], ENT_QUOTES);
+$image = htmlentities($_FILES['image'], ENT_QUOTES);
 // check that name and phone and email are not empty
-if ($name == '' || $descr == '' || $simage == '')
-{
+if ($name == '' || $descr == '') {
 // if they are empty, show an error message and display the form
 $error = 'ERROR: Please fill in all required fields!';
-renderForm($name, $descr, $simage, $error, $id);
+renderForm($name, $descr, $image, $error, $id);
 }
 else
 {
@@ -79,7 +77,7 @@ else
 if ($stmt = $connection->prepare("UPDATE courses SET name = ?, phone = ?, email = ?, image = ?
 WHERE id=?"))
 {
-$stmt->bind_param("sssi", $name, $descr, $simage, $id);
+$stmt->bind_param("sssi", $name, $descr, $image, $id);
 $stmt->execute();
 $stmt->close();
 }
@@ -90,7 +88,7 @@ echo "ERROR: could not prepare SQL statement.";
 }
 
 // redirect the user once the form is updated
-header("Location: ../index.php");
+
 }
 }
 // if the 'id' variable is not valid, show an error message
@@ -114,11 +112,11 @@ if($stmt = $connection->prepare("SELECT name, descr, image FROM courses WHERE id
 $stmt->bind_param("i", $id);
 $stmt->execute();
 
-$stmt->bind_result($name, $descr, $simage);
+$stmt->bind_result($name, $descr, $image);
 $stmt->fetch();
 
 // show the form
-renderForm($name, $descr, $simage,NULL, $id);
+renderForm($name, $descr, $image, NULL, $id);
 
 $stmt->close();
 }
@@ -149,10 +147,9 @@ if (isset($_POST['submit']))
 // get the form data
 $name = htmlentities($_POST['name'], ENT_QUOTES);
 $descr = htmlentities($_POST['descr'], ENT_QUOTES);
-$simage = htmlentities($_POST['simage'], ENT_QUOTES);
+
 // check that variables not empty
-if ($name == '' || $descr == '' || $simage == '')
-{
+if ($name == '' || $descr == '') {
 // if they are empty, show an error message and display the form
 $error = 'ERROR: Please fill in all required fields!';
 renderForm($name, $descr, $simage, $error);
@@ -162,7 +159,7 @@ else
 // insert the new record into the database
 if ($stmt = $connection->prepare("INSERT courses (name, descr, image) VALUES (?, ?, ?)"))
 {
-$stmt->bind_param("sss", $name, $descr, $simage);
+$stmt->bind_param("sss", $name, $descr, $image);
 $stmt->execute();
 $stmt->close();
 }

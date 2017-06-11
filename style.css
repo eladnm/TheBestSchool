@@ -25,7 +25,7 @@ body {
 
 }
 
-input{
+input[type=text], [type=password]{
   font-size: 22px;
   position: relative;
   width: 100%;

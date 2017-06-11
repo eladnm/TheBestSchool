@@ -1,7 +1,7 @@
 <?php
  $name = $_SESSION["name"];
  $role = $_SESSION["role"];
- $image =$_SESSION["image"];
+ $userimage =$_SESSION["image"];
  ?>
   <style>
 nav{
@@ -36,11 +36,11 @@ display: flex;
 <header>
 	<nav>
 <div class="nav_container">
-		<a href="/?subject=admins">School</a>
+		<a href="index.php">School</a>
 		<?php 
 		// if (Permissions::permit('$_SESSION['role'])) {
 		if ($_SESSION['role'] !== 'sales') {
-			echo '<a href="/?subject=admins">Administration</a>';
+			echo '<a href="views/admins_list.php?subject=admins">Administration</a>';
 		}
 		 ?>
 	<div class="container_user">
@@ -49,7 +49,7 @@ display: flex;
             <span><?php echo $role ?></span>
             <a href="api.php/?action=logout">Log out</a>
         </div>
-            <img src= <?php echo $image ?> height="80" width="80" alt="user-image"/>
+            <img src= <?php echo $userimage ?> height="80" width="80" alt="user-image"/>
   </div>
 </div>   
 	</nav>

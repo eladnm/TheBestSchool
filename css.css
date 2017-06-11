@@ -1,22 +1,30 @@
 html {
   overflow-y: scroll;
+
 }
 form {
-  background: rgba(19, 35, 47, 0.9); 
+  background: rgba(105, 114, 122, 0.9); 
   padding: 40px;
   max-width: 600px;
   margin: 40px auto;
   border-radius: 4px;
   box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
 }
-
+main {
+    display: flex;
+  flex: nowrap;
+  margin-top:2%;
+}
 
 body { 
   font-family: 'Titillium Web', sans-serif;
 
 }
-
-input{
+h2 {
+    display: flex;
+  flex: wrap;
+}
+#formm input[type=text], input[type=email]{
   font-size: 22px;
   display: block;
   width: 80%;
@@ -28,21 +36,23 @@ input{
   -webkit-transition: border-color .25s ease, box-shadow .25s ease;
   transition: border-color .25s ease, box-shadow .25s ease;
 }
-input #submit {
-  width: 60%;
+#label {
+  font-size: 18px;
+  font-weight: bold; 
 }
-
-label {
-  position: absolute;
-  -webkit-transform: translateY(6px);
-          transform: translateY(6px);
-  color: rgba(255, 255, 255, 0.5);
-  -webkit-transition: all 0.25s ease;
-  transition: all 0.25s ease;
-  -webkit-backface-visibility: hidden;
-  pointer-events: none;
+#formm input[type=submit] {
+  width: 80%;
   font-size: 22px;
 }
+#formm input[type=checkbox] {
+  font-size: 22px;
+}
+select {
+   width: 80%;
+  font-size: 22px; 
+}
+
+
 span {
     color: #1ab188;
     font-weight: bold;
@@ -53,4 +63,16 @@ padding: 0,auto;
 }
 h1{
   text-align: center;
+}
+
+#edit #head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+textarea#descr {
+  color: black;
+}
+button#fire {
+  margin left:40%;
 }
