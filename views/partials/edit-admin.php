@@ -1,14 +1,13 @@
 <?php
 require_once __DIR__ . '/../../lib/core.php';
-require_once '../../classes/Course.php';
 
 $_SESSIO['id'] = '$id';
 $_SESSION['name'] = '$name';
+$_SESSION['role'] = '$role';
 $_SESSION['phone'] = '$phone';
 $_SESSION['email'] = '$email';
 $_SESSION['image'] = '$image';
 $_SESSION['error'] = '$error';
-$_SESSION['course'] = '$course_id';
 
 if (hasUserID() && isGetRequest()) {
 	renderForm();
@@ -30,27 +29,27 @@ function isPostRequest() {
 ?>
 <?php function renderForm() {
 	?><div id="head" style="display: flex;
-    align-items: center; justify-content: center; font-size: 20px;"><?php echo "Edit Student's Details"; ?></div>
+    align-items: center; justify-content: center; font-size: 20px;"><?php echo "Edit Admin's Details"; ?></div>
 	<?php $userID = $_GET['id'];
 	$user = fetchUserDetailsByID($userID);
-	render('student-form', $user);
+	render('admin-form', $user);
 }
 
 function fetchUserDetailsByID($userID) {
 	global $connection;
-	$stmt = $connection->prepare("SELECT id, name, phone, email, image FROM students WHERE id=?");
+	$stmt = $connection->prepare("SELECT id, name, phone, email, image, role FROM admins WHERE id=?");
 	$stmt->bind_param("i", $userID);
 	$stmt->execute();
-	$stmt->bind_result($id, $name, $phone, $email, $image);
+	$stmt->bind_result($id, $name, $phone, $email, $image, $role);
 	$stmt->fetch();
 	$stmt->close();
-	return compact('id', 'name', 'phone', 'email', 'image');
+	return compact('id', 'name', 'phone', 'email', 'image', 'role');
 }
 
 function updateStudentInDatabase() {
-	$student = getStudentDetails();
-	if (studentDataIsValid($student)) {
-		saveStudent($student);
+	$admin = getStudentDetails();
+	if (studentDataIsValid($admin)) {
+		saveStudent($admin);
 	}
 }
 
@@ -60,32 +59,29 @@ function getStudentDetails() {
 		'name' => htmlentities($_POST['name'], ENT_QUOTES),
 		'phone' => htmlentities($_POST['phone'], ENT_QUOTES),
 		'email' => htmlentities($_POST['email'], ENT_QUOTES),
+		'role' => htmlentities($_POST['role'], ENT_QUOTES),
 	];
 }
 
-function studentDataIsValid($student) {
-	return $student['id'] !== '' &&
-		$student['name'] !== '' &&
-		$student['phone'] !== '' &&
-		$student['email'] !== '';
+function studentDataIsValid($admin) {
+	return $admin['id'] !== '' &&
+		$admin['name'] !== '' &&
+		$admin['phone'] !== '' &&
+		$admin['email'] !== '';
 }
 
-function saveStudent($student) {
+function saveStudent($admin) {
 	global $connection;
 	$image = saveStudentImage();
-	$join_table_sql = joinTable();
-	$stmt = $connection->prepare("UPDATE students SET name = ?, phone = ?, email = ?, image = ?
+	$stmt = $connection->prepare("UPDATE admins SET name = ?, phone = ?, email = ?, image = ?, role = ?
 WHERE id=?");
-	extract($student);
-	$stmt->bind_param("ssssi", $name, $phone, $email, $image, $id);
+	extract($admin);
+	$stmt->bind_param("ssssii", $name, $phone, $email, $image, $role, $id);
 	$stmt->execute();
 	printf("%d Row inserted.\n", $stmt->affected_rows);
 	$stmt->close();
 }
-function joinTable() {
-	$join_table_sql = "INSERT INTO students_courses (student_id, course_id)
-VALUES ('$id', '$course_id')";
-}
+
 function saveStudentImage() {
 	$target_dir = "images/";
 	$file = $_FILES['imageUpload']['name'];

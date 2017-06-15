@@ -7,6 +7,7 @@ class Admin {
 	public $email;
 	public $id;
 	public $image;
+	public $role;
 	public static function find_all() {
 		global $database;
 		return self::find_by_sql("SELECT * FROM admins");

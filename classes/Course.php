@@ -18,6 +18,10 @@ class Course {
 		global $database;
 		return self::find_by_sql("SELECT courses.* FROM students_courses, courses WHERE courses.id = students_courses.course_id AND students_courses.student_id = $student_id");
 	}
+	public static function find_course_students($course_id) {
+		global $database;
+		return self::find_by_sql("SELECT students.* FROM students_courses, students WHERE students.id = students_courses.student_id AND students_courses.course_id = $course_id");
+	}
 	public static function find_by_sql($sql = "") {
 		global $database;
 		$result_set = $database->query($sql);

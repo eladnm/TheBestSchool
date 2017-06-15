@@ -19,7 +19,10 @@ function handleStudentForm(options) {
                 contentType: false,
                 data: formData,
                 success: function(result){
-                  console.log(result);
+      $('#success_message').fadeIn().html(result);
+        setTimeout(function() {
+          $('#success_message').fadeOut("slow");
+        }, 2000 );
               }
           });
         });
@@ -63,7 +66,10 @@ function handleCourseForm(options) {
                 contentType: false,
                 data: formData,
                 success: function(result){
-                  console.log(result);
+      $('#success_course_message').fadeIn().html(result);
+        setTimeout(function() {
+          $('#success_course_message').fadeOut("slow");
+        }, 2000 );
               }
           });
         });

@@ -1,8 +1,8 @@
-<?php 
+<?php
 session_start();
 include 'conn.php';
 if (!isset($_SESSION['name'])) {
-		header("Location:login.php");
+	header("Location:login.php");
 }
 
 if (!isset($_GET['subject']) || empty($_GET['subject'])) {
@@ -10,7 +10,7 @@ if (!isset($_GET['subject']) || empty($_GET['subject'])) {
 	die();
 }
 
- ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,23 +22,23 @@ if (!isset($_GET['subject']) || empty($_GET['subject'])) {
 	<link rel="stylesheet" type="text/css" href="css.css"/>
 </head>
 <body>
-<?php include 'views/header.php'; ?>
+<?php include 'views/header.php';?>
 
 <main>
 
 <?php
-    switch ($_GET['subject']) {
-        case 'school':
-            include 'views/admins.php';
-            break;
-            case 'admins':
-            include 'views/admins.php';
-            break;
-    }
+switch ($_GET['subject']) {
+case 'school':
+	include 'views/admins.php';
+	break;
+case 'admins':
+	include 'views/admins.php';
+	break;
+}
 
 ?>
 </main>
-	
-<?php include 'views/footer.php'; ?>
+
+<?php include 'views/footer.php';?>
 </body>
 </html>

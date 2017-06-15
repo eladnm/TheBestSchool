@@ -98,7 +98,7 @@ class MySQLDatabase {
 
 	private function confirm_query($result) {
 		if (!$result) {
-			die("Not registered to any courses yet.");
+			die;
 		}
 	}
 

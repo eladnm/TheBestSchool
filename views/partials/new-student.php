@@ -1,6 +1,4 @@
 <?php
-//var_dump($_POST) or die;
-// connect to the database
 require_once __DIR__ . '/../../lib/core.php';
 require_once '../../classes/Course.php';
 $_SESSION['id'] = '$id';

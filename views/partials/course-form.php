@@ -1,54 +1,47 @@
 <?php
 require_once '../../classes/Course.php';
+$_SESSIO['id'] = '$id';
+$_SESSIO['image'] = '$image';
+$_SESSION['name'] = '$name';
+$_SESSION['descr'] = '$descr';
+$_SESSION['error'] = '$error';
+$_SESSION['course'] = '$course_id';
 ?>
 <html>
 <body>
 <form id="formm" action="" enctype="multipart/form-data" method="post">
 	<div>
-		<?php if ($id != '') {?>
-			<input type="hidden" name="id" value="<?php echo $id; ?>" />
-			<p>ID: <?php echo $id; ?></p>
+<?php if ($id != '') {?>
+<?php
+$course_students = Course::find_course_students($id);?>
+<table style="width: 100%">
+	<caption>List of Students Registered to the class: <?php echo $name; ?></caption>
+	<tbody>
+		<?php foreach ($course_students as $student) {?>
+		<tr>
+			<td><?php echo $student->name; ?></td>
+		</tr>
 		<?php }?>
+	</tbody>
+</table><br/>
+			<input type="hidden" name="id" value="<?php echo $id; ?>" />
+		<?php }?>
+
 		<strong>ID Number: *</strong>
 		<input type="text" required name="id1" id="id" value="<?php echo $id; ?>"/><br/>
 		<strong>Name: *</strong>
 		<input type="text" required name="name" id="name"
 		value="<?php echo $name; ?>"/><br/>
-			<strong>Description: *</strong><textarea name="descr" id="descr" rows='6' cols='50'><?php echo $descr; ?></textarea><br/>
-		<input type="file" id="imageUpload" name="imageUpload"/>
+			<strong>Description: *</strong><br/><textarea name="descr" id="descr" rows='6' cols='60'><?php echo $descr; ?></textarea><br/>
+			<div id="label">Upload Image: *</div>
+		<input type="file" id="imageUpload" name="imageUpload"/></input>
 
-		<p>* required</p>
+		<p>* Required</p>
 		<button type="submit" id="fire" name="submit">Submit</button>
-	</div>
-	</form>
+		<div id="success_course_message" class="ajax_response" style="float:left"></div>
+	   <div id="error_course_message" class="ajax_response" style="float:left"></div>
+
 </body>
 </html>
-<?php
-/*
-$courses = Course::find_all();
-
-foreach ($courses as $course) {
-echo "<option value='{$course->id}'>{$course->name}</option>";
-}
-
-?>
-<input type="file" id="imageUpload" name="imageUpload"/>
-
-<p>* required</p>
-<button type="submit" id="fire" name="submit">Submit</button>
-</div>
-<?php
-/*
-$student_courses = Course::find_student_courses($id);?>
-
-<table style="width: 100%">
-<caption>Participating in:</caption>
-<tbody>
-<?php foreach ($student_courses as $course) {?>
-<tr>
-<td><?php echo $course->name; ?></td>
-</tr>
-<?php }?>
-</tbody>
-</table>
- */
+	</div>
+	</form>

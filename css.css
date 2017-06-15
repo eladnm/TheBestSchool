@@ -5,15 +5,23 @@ html {
 form {
   background: rgba(105, 114, 122, 0.9); 
   padding: 40px;
-  max-width: 600px;
-  margin: 40px auto;
+  max-width: 90%;
+  height: 18%;
   border-radius: 4px;
   box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+caption {
+text-align: left;
+color: #38ff38;
+}
+tbody td {
+  text-decoration-style: bold;
 }
 main {
     display: flex;
   flex: nowrap;
   margin-top:2%;
+  width: 100%;
 }
 
 body { 
@@ -21,14 +29,14 @@ body {
 
 }
 h2 {
-    display: flex;
+  display: flex;
   flex: wrap;
 }
-#formm input[type=text], input[type=email]{
+#formm input[type=text], input[type=email], input[type=checkbox], input[type=phone], input[type=submit]{
   font-size: 22px;
   display: block;
-  width: 80%;
-  height: 80%;
+  width: 90%;
+
   padding: 5px 5px;
   border: 1px solid #a0b3b0;
   color: black;
@@ -40,13 +48,7 @@ h2 {
   font-size: 18px;
   font-weight: bold; 
 }
-#formm input[type=submit] {
-  width: 80%;
-  font-size: 22px;
-}
-#formm input[type=checkbox] {
-  font-size: 22px;
-}
+
 select {
    width: 80%;
   font-size: 22px; 
@@ -61,7 +63,7 @@ span {
   position: relative;
 padding: 0,auto;
 }
-h1{
+h1, h3{
   text-align: center;
 }
 
@@ -74,5 +76,22 @@ textarea#descr {
   color: black;
 }
 button#fire {
-  margin left:40%;
+  font-size:18px;
+  margin-left:40%; 
+}
+#success_message{
+    background: #33c433;
+    box-sizing: border-box;
+    font-size: 22px;
+}
+#success_course_message{
+    background: #33c433;
+}
+input#imageUpload {
+  font-size: 18px;
+}
+table {
+  color: black;
+  text-decoration-style: solid;
+  text-align: left; 
 }

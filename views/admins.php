@@ -6,21 +6,6 @@ $role = $_SESSION["role"];
 $image = $_SESSION["image"];
 $userimage = $_SESSION["image"];
 
-//$dirname = "/images/";
-//$images = glob($dirname."*.jpg");
-/* long method
-$admin_set = Admin::find_all();
-while ($admin = $database->fetch_array($admin_set)) {
-echo "Name: ". $admin['name'] ."<br />";
-echo "id: ". $admin['id'] . "<br />";
-echo "Email: ". $admin['email'] . "<br />";
-echo "Phone: ". $admin['phone'] . "<br />";
-}
-
-$admin=Admin::find_by_id(54547852);
-echo $admin->full_details();
-echo "<hr />";
- */
 ?>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -35,7 +20,7 @@ echo "<hr />";
 }
 
 .students_full {
-  width: 20%;
+  width: 15%;
 
 
 }
@@ -44,11 +29,9 @@ echo "<hr />";
     overflow-y: auto;
 }
 .courses_full {
-  width:30%;
+  width:25%;
 }
-#edit {
-  width:50%;
-}
+
 #searchbox {
     border: 2px solid blue;
     border-radius: 4px;
@@ -66,12 +49,7 @@ echo "<hr />";
 #edit {
   width:60%;
 }
-#sea
-#searchbox {
-    border: 2px solid blue;
-    border-radius: 4px;
-}
-}
+
 </style>
 <script>
 

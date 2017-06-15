@@ -1,7 +1,7 @@
 <?php
 include 'conn.php';
 include "classes/course.php";
-session_start();
+
 $name = $_POST['name'];
 $descr = $_POST['descr'];
 if (isset($_POST["submit"])) {
@@ -14,10 +14,8 @@ if (isset($_POST["submit"])) {
 	// Check if image file is a actual image or fake image
 	$check = getimagesize($imageTmpName);
 	if ($check !== false) {
-		echo "File is an image - " . $check['mime'] . ".";
 		$uploadOk = 1;
 	} else {
-		echo "File is not an image.";
 		$uploadOk = 0;
 	}
 	$imageFileDestination = __DIR__ . '/images/' . $file;
@@ -29,7 +27,7 @@ $filePath = $connection->escape_string('images/' . $file);
 $sql = "INSERT INTO courses (name, descr, image)
 VALUES ('$name', '$descr', '$filePath')";
 if ($db->query($sql) === TRUE) {
-	echo "New record created successfully";
+	echo "New Course created successfully";
 } else {
 	echo "Error: " . $sql . "<br>" . $db->error;
 }

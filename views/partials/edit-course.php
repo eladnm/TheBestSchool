@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../lib/core.php';
 require_once '../../classes/Course.php';
 $_SESSIO['id'] = '$id';
+$_SESSIO['image'] = '$image';
 $_SESSION['name'] = '$name';
 $_SESSION['descr'] = '$descr';
 $_SESSION['error'] = '$error';
@@ -87,10 +88,8 @@ function saveCourseImage() {
 	// Check if image file is a actual image or fake image
 	$check = getimagesize($imageTmpName);
 	if ($check !== false) {
-		echo "File is an image - " . $check['mime'] . ".";
 		$uploadOk = 1;
 	} else {
-		echo "File is not an image.";
 		$uploadOk = 0;
 	}
 	$imageFileDestination = __DIR__ . '/../../images/' . $file;
