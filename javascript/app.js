@@ -22,7 +22,7 @@ function handleStudentForm(options) {
       $('#success_message').fadeIn().html(result);
         setTimeout(function() {
           $('#success_message').fadeOut("slow");
-        }, 2000 );
+        }, 5000 );
               }
           });
         });

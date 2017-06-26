@@ -37,7 +37,7 @@ require_once '../../classes/Course.php';
 
 		<div id="label">Select Your Course:</div>
 
-<select name="Course" id="course">
+<select required name="course" name="Course" id="course">
 <option value = "">Select Your Course</option>
 <?php
 $courses = Course::find_all();

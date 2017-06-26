@@ -85,7 +85,6 @@ VALUES ('$id', '$course_id')";
 	} else {
 		echo "Error: " . $join_table_sql . "<br>" . $connection->error;
 	}
-	printf("%d Row inserted.\n", $stmt->affected_rows);
 	$stmt->close();
 }
 

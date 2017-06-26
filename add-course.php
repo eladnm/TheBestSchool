@@ -21,17 +21,14 @@ if (isset($_POST["submit"])) {
 	$imageFileDestination = __DIR__ . '/images/' . $file;
 	move_uploaded_file($imageTmpName, $imageFileDestination);
 }
-
 $filePath = $connection->escape_string('images/' . $file);
-
 $sql = "INSERT INTO courses (name, descr, image)
-VALUES ('$name', '$descr', '$filePath')";
+VALUES ('$name', '$descr', '$filePath');";
 if ($db->query($sql) === TRUE) {
 	echo "New Course created successfully";
 } else {
 	echo "Error: " . $sql . "<br>" . $db->error;
 }
-
 $db->close_connection();
 
 ?>
