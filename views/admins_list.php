@@ -40,16 +40,17 @@ include 'header.php';
 <?php
 require_once "../classes/Admin.php";
 $admins = Admin::find_all();
+$admin_role = Admin::find_admins_role();
 foreach ($admins as $admin) {
 	echo $admin->name . "<br />";
 	echo "Role: " . $admin->role . "<br />";
 	echo "Phone: " . $admin->phone . "<br />";
-	//echo "email: ". $admin->email . "<br />";
 	echo '<img src="../' . $admin->image . '" height="100" width="100"><br /> ';
 	echo "<a href='partials/edit-admin.php?id=" . $admin->id . "' class='edit_admin_button'>Edit</a>";
 	echo "<a href='views/delete-admin.php?id=" . $admin->id . "'>Delete</a>";
 }
 ?>
+
 </div>
 <div id="editAdmin">
 <?php include "edit-index.html"

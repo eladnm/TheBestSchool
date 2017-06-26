@@ -46,7 +46,7 @@ foreach ($courses as $course) {
 	echo "<option value='{$course->id}'>{$course->name}</option>";
 }?></select>
 <div id="label">Upload Image: *</div>
-		<input type="file" id="imageUpload" name="imageUpload"/></input>
+		<input type="file" required name="image" id="imageUpload" name="imageUpload"/></input>
 
 		<p>* Required</p>
 		<div id="success_message" class="ajax_response" style="float:left"></div>

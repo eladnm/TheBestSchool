@@ -9,7 +9,6 @@ $_SESSION['email'] = '$email';
 $_SESSION['image'] = '$image';
 $_SESSION['error'] = '$error';
 $_SESSION['course'] = '$course_id';
-
 if (hasUserID() && isGetRequest()) {
 	renderForm();
 } else if (isPostRequest()) {
@@ -56,10 +55,11 @@ function updateStudentInDatabase() {
 
 function getStudentDetails() {
 	return [
-		'id' => $_POST['id'],
+		'id' => htmlentities($_POST['id'], ENT_QUOTES),
 		'name' => htmlentities($_POST['name'], ENT_QUOTES),
 		'phone' => htmlentities($_POST['phone'], ENT_QUOTES),
 		'email' => htmlentities($_POST['email'], ENT_QUOTES),
+		'course_id' => htmlentities($_POST['Course'], ENT_QUOTES),
 	];
 }
 
@@ -73,19 +73,22 @@ function studentDataIsValid($student) {
 function saveStudent($student) {
 	global $connection;
 	$image = saveStudentImage();
-	$join_table_sql = joinTable();
 	$stmt = $connection->prepare("UPDATE students SET name = ?, phone = ?, email = ?, image = ?
 WHERE id=?");
 	extract($student);
 	$stmt->bind_param("ssssi", $name, $phone, $email, $image, $id);
 	$stmt->execute();
+	$join_table_sql = "INSERT INTO students_courses (student_id, course_id)
+VALUES ('$id', '$course_id')";
+	if ($connection->query($join_table_sql) === TRUE) {
+		echo "New record created successfully";
+	} else {
+		echo "Error: " . $join_table_sql . "<br>" . $connection->error;
+	}
 	printf("%d Row inserted.\n", $stmt->affected_rows);
 	$stmt->close();
 }
-function joinTable() {
-	$join_table_sql = "INSERT INTO students_courses (student_id, course_id)
-VALUES ('$id', '$course_id')";
-}
+
 function saveStudentImage() {
 	$target_dir = "images/";
 	$file = $_FILES['imageUpload']['name'];

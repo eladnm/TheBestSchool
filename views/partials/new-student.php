@@ -60,9 +60,7 @@ if (isset($_POST['submit'])) {
 			echo "ERROR: Could not prepare SQL statement.";
 		}
 
-// redirec the user
 		echo "Student added successfully";
-//header("Location: view.php");
 	}
 
 }

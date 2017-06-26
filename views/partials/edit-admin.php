@@ -3,7 +3,6 @@ require_once __DIR__ . '/../../lib/core.php';
 
 $_SESSIO['id'] = '$id';
 $_SESSION['name'] = '$name';
-$_SESSION['role'] = '$role';
 $_SESSION['phone'] = '$phone';
 $_SESSION['email'] = '$email';
 $_SESSION['image'] = '$image';
@@ -37,13 +36,13 @@ function isPostRequest() {
 
 function fetchUserDetailsByID($userID) {
 	global $connection;
-	$stmt = $connection->prepare("SELECT id, name, phone, email, image, role FROM admins WHERE id=?");
+	$stmt = $connection->prepare("SELECT id, name, phone, email, image FROM admins WHERE id=?");
 	$stmt->bind_param("i", $userID);
 	$stmt->execute();
-	$stmt->bind_result($id, $name, $phone, $email, $image, $role);
+	$stmt->bind_result($id, $name, $phone, $email, $image);
 	$stmt->fetch();
 	$stmt->close();
-	return compact('id', 'name', 'phone', 'email', 'image', 'role');
+	return compact('id', 'name', 'phone', 'email', 'image');
 }
 
 function updateStudentInDatabase() {
@@ -59,7 +58,6 @@ function getStudentDetails() {
 		'name' => htmlentities($_POST['name'], ENT_QUOTES),
 		'phone' => htmlentities($_POST['phone'], ENT_QUOTES),
 		'email' => htmlentities($_POST['email'], ENT_QUOTES),
-		'role' => htmlentities($_POST['role'], ENT_QUOTES),
 	];
 }
 
@@ -73,10 +71,10 @@ function studentDataIsValid($admin) {
 function saveStudent($admin) {
 	global $connection;
 	$image = saveStudentImage();
-	$stmt = $connection->prepare("UPDATE admins SET name = ?, phone = ?, email = ?, image = ?, role = ?
+	$stmt = $connection->prepare("UPDATE admins SET name = ?, phone = ?, email = ?, image = ?
 WHERE id=?");
 	extract($admin);
-	$stmt->bind_param("ssssii", $name, $phone, $email, $image, $role, $id);
+	$stmt->bind_param("ssssi", $name, $phone, $email, $image, $id);
 	$stmt->execute();
 	printf("%d Row inserted.\n", $stmt->affected_rows);
 	$stmt->close();

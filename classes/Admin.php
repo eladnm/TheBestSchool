@@ -10,13 +10,18 @@ class Admin {
 	public $role;
 	public static function find_all() {
 		global $database;
-		return self::find_by_sql("SELECT * FROM admins");
+		return self::find_by_sql("SELECT roles.role, admins.name, admins.phone, admins.id, admins.image FROM roles INNER JOIN admins ON admins.role=roles.id");
 	}
 	public static function find_by_id($id = 0) {
 		global $database;
 		$result_array = self::find_by_sql("SELECT * FROM admins WHERE id={$id} LIMIT 1");
 		return !empty($result_array) ? array_shift($result_array) : false;
 	}
+	public static function find_admins_role() {
+		global $database;
+		return self::find_by_sql("SELECT roles.role, admins.name FROM roles INNER JOIN admins ON admins.role=roles.id");
+	}
+
 	public static function find_by_sql($sql = "") {
 		global $database;
 		$result_set = $database->query($sql);

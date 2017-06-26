@@ -34,7 +34,7 @@ $course_students = Course::find_course_students($id);?>
 		value="<?php echo $name; ?>"/><br/>
 			<strong>Description: *</strong><br/><textarea name="descr" id="descr" rows='6' cols='60'><?php echo $descr; ?></textarea><br/>
 			<div id="label">Upload Image: *</div>
-		<input type="file" id="imageUpload" name="imageUpload"/></input>
+		<input type="file" required name="image" id="imageUpload" name="imageUpload"/></input>
 
 		<p>* Required</p>
 		<button type="submit" id="fire" name="submit">Submit</button>
