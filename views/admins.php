@@ -1,11 +1,13 @@
 <?php
 require_once 'functions.php';
 require_once 'conn.php';
+if (!isset($_SESSION)) {
+	session_start();
+}
 $name = $_SESSION["name"];
 $role = $_SESSION["role"];
 $image = $_SESSION["image"];
 $userimage = $_SESSION["image"];
-
 ?>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -21,8 +23,10 @@ $userimage = $_SESSION["image"];
 
 .students_full {
   width: 15%;
-
-
+}
+#edit {
+  background-image: url(images/school2.jpg);
+background-repeat:no-repeat;
 }
 .list {
     height: 50%;
@@ -48,6 +52,8 @@ $userimage = $_SESSION["image"];
 }
 #edit {
   width:60%;
+  background-image: url(images/school2.jpg);
+background-repeat:no-repeat;
 }
 
 </style>

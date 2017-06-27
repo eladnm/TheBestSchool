@@ -49,7 +49,7 @@ if ($_SESSION['role'] !== 'sales') {
             <span><?php echo $role ?></span>
             <a href="http://localhost/school_project/api.php/?action=logout">Log out</a>
         </div>
-            <img src= <?php echo $userimage ?> height="80" width="80" alt="user-image"/>
+            <img src=http://localhost/school_project/<?php echo $userimage ?> height="80" width="80" alt="user-image"/>
   </div>
 </div>
 	</nav>
